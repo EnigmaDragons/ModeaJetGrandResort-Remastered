@@ -255,6 +255,7 @@ GameObject:
   - component: {fileID: 7538566374364326473}
   - component: {fileID: 1283548195226350860}
   - component: {fileID: 7996742050503864306}
+  - component: {fileID: 3696145957587395721}
   m_Layer: 0
   m_Name: DockingBay
   m_TagString: Untagged
@@ -343,6 +344,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &3696145957587395721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2279141746066496627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70a64aadd044ec8855c8e23db761393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 11400000, guid: 5998df3375aa60f4e90787339327cb93, type: 2}
+  musicPlayer: {fileID: 11400000, guid: 95f47694e0b28ce48a808ae15f18f4d8, type: 2}
 --- !u!1 &2898982760140026187
 GameObject:
   m_ObjectHideFlags: 0
