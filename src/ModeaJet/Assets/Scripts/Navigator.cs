@@ -1,18 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Navigator : MonoBehaviour
+[CreateAssetMenu(menuName = "GameTemplate/OnlyOnce/Navigator")]
+public sealed class Navigator : ScriptableObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public void NavigateToMainMenu() => NavigateTo("MainMenu");
+    public void NavigateToGame() => NavigateTo("GameScene");
 
-    // Update is called once per frame
-    void Update()
+    public void NavigateTo(string sceneName)
     {
-        
+        SceneManager.LoadScene(sceneName);
     }
 }
