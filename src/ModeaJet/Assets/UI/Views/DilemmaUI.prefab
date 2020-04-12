@@ -332,13 +332,14 @@ GameObject:
   - component: {fileID: 6116361747019478483}
   - component: {fileID: 4926842778875348411}
   - component: {fileID: 8856861178361926340}
+  - component: {fileID: 2676946048591659179}
   m_Layer: 0
   m_Name: DilemmaUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2197548259932831527
 RectTransform:
   m_ObjectHideFlags: 0
@@ -422,6 +423,20 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &2676946048591659179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426584363335189791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b70a64aadd044ec8855c8e23db761393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music: {fileID: 11400000, guid: 6ddabfb469159ed4d8a11982cfbc23f3, type: 2}
+  musicPlayer: {fileID: 11400000, guid: 95f47694e0b28ce48a808ae15f18f4d8, type: 2}
 --- !u!1 &4147461815140359876
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,6 +599,7 @@ GameObject:
   - component: {fileID: 4111873604151427963}
   - component: {fileID: 4831857146561558439}
   - component: {fileID: 98959942060805111}
+  - component: {fileID: 7527034856079207373}
   m_Layer: 0
   m_Name: BackButton
   m_TagString: Untagged
@@ -607,7 +623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8, y: 8}
+  m_AnchoredPosition: {x: 12, y: 12}
   m_SizeDelta: {x: 44, y: 44}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &4111873604151427963
@@ -691,9 +707,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4831857146561558439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7527034856079207373}
+        m_MethodName: Execute
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &7527034856079207373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4788378437079628262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47f193acc02346d0b218e99e49247d4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  view: 0
 --- !u!1 &5135982313100456481
 GameObject:
   m_ObjectHideFlags: 0
