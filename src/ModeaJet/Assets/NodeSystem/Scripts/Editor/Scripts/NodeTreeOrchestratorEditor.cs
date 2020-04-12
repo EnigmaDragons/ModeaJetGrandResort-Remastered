@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using EnigmaDragons.NodeSystem;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,26 +10,29 @@ namespace EnigmaDragons.NodeSystem
     {
         public override void OnInspectorGUI()
         {
-            if (GUILayout.Button("Refresh"))
+            DrawDefaultInspector(); // Maybe useful for seeing what is loaded. Can be disabled if desired.
+            
+            if (!GUILayout.Button("Refresh")) return;
+            
+            var orchestrator = (NodeTreeOrchestrator)target;
+            var scriptableObjectArrayFields = typeof(NodeTreeOrchestrator)
+                .GetFields()
+                .Where(x => x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
+                .ToArray();
+            foreach (var f in scriptableObjectArrayFields)
             {
-                var castMethod = this.GetType().GetMethod("Cast");
-                Debug.Log(castMethod);
-                var orchestrator = (NodeTreeOrchestrator)target;
-                var fields = typeof(NodeTreeOrchestrator).GetFields().ToArray();
-                fields.Where(x =>
-                        x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
-                    .ToArray()
-                    .ForEach(x => x.SetValue(target, castMethod.MakeGenericMethod(x.FieldType).Invoke(null, new [] { ScriptableExtensions.GetAllInstances(x.FieldType.GetElementType()) })));
-                orchestrator.NodeTrees = Resources.LoadAll<TextAsset>("NodeTrees");
-                orchestrator.CurrentNodeTree = ScriptableExtensions.GetAllInstances<CurrentNodeTree>().First();
-                //orchestrator.Conditions = ScriptableExtensions.GetAllInstancesByLabel("condition")
-                //    .Cast<NodeConditionHandler>().ToArray();
+                var arrItemType = f.FieldType.GetElementType();
+                var instances = ScriptableExtensions.GetAllInstances(arrItemType);
+                var typedArray = Array.CreateInstance(arrItemType, instances.Length);
+                for (var i = 0; i < instances.Length; i++)
+                    typedArray.SetValue(instances[i], i);
+                f.SetValue(target, typedArray);
             }
-        }
-
-        private static T Cast<T>(object o)
-        {
-            return (T)o;
+                    
+            orchestrator.NodeTrees = Resources.LoadAll<TextAsset>("NodeTrees");
+            orchestrator.CurrentNodeTree = ScriptableExtensions.GetAllInstances<CurrentNodeTree>().First();
+            //orchestrator.Conditions = ScriptableExtensions.GetAllInstancesByLabel("condition")
+            //    .Cast<NodeConditionHandler>().ToArray();
         }
     }
 }
