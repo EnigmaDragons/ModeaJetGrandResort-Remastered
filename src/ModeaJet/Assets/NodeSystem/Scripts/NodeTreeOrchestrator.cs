@@ -15,6 +15,7 @@ namespace EnigmaDragons.NodeSystem
         [SerializeField] private FloatVariable[] floats;
         [SerializeField] private Vector3Variable[] vector3s;
         [SerializeField] private ColorReference[] colors;
+        [SerializeField] private Character[] characters;
         #endregion
 
         #region Messages To Wait For Map
@@ -46,6 +47,7 @@ namespace EnigmaDragons.NodeSystem
                 _conditionMap = Conditions.ToDictionary(x => x.CondtionType, x => x);
             Message.Subscribe<NodeTreeChanged>(Execute, this);
             Message.Subscribe<MessageProcessed>(Execute, this);
+            Message.Subscribe<ProgressNodeTree>(_ => Next(), this);
         }
 
         private void OnDisable()

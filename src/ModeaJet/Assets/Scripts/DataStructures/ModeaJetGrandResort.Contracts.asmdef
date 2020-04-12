@@ -1,6 +1,8 @@
 {
     "name": "ModeaJetGrandResort.Contracts",
-    "references": [],
+    "references": [
+        "GUID:456e76650ea7cae40bf11951076572cf"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
