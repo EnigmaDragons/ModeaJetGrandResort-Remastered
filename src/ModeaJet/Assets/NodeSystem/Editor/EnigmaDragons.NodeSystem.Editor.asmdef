@@ -1,0 +1,19 @@
+{
+    "name": "EnigmaDragons.NodeSystem.Editor",
+    "references": [
+        "GUID:1de8d46595421b3459ea05eba6ce1840",
+        "GUID:805c1f8ad13aa6148a6b2eedf19809c1",
+        "GUID:aa285aef60eeb2343af444de887e0ac6"
+    ],
+    "includePlatforms": [
+        "Editor",
+        "WSA"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}

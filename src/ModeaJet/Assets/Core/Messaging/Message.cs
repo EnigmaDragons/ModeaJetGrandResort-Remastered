@@ -72,9 +72,15 @@ public static class Message
             if (_isPublishing) return;
             
             _isPublishing = true;
-            while (_eventQueue.Any()) 
-                Publish(_eventQueue.Dequeue());
+            while (_eventQueue.Any())
+                PublishWithMessageProcessed(_eventQueue.Dequeue());
             _isPublishing = false;
+        }
+
+        private void PublishWithMessageProcessed(object payload)
+        {
+            Publish(payload);
+            Publish(new MessageProcessed { MessageType = payload.GetType() });
         }
 
         private void Publish(object payload)
