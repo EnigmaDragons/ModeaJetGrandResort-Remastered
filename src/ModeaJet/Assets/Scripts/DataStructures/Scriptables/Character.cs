@@ -2,10 +2,11 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Content/Character")]
 public class Character : SerializedScriptableObject
 {
     [SerializeField] private string name;
-    [SerializeField] private string scanInfo;
+    [SerializeField, TextArea(10, 12)] private string scanInfo;
     [SerializeField] private TextAsset dialogue;
     [SerializeField] private Dictionary<Expression, Sprite> expressions;
 
