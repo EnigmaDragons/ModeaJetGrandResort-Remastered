@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.DataStructures.Commands;
 using UnityEngine;
 
-public sealed class DialogueView : OnMessage<ShowStatement>
+public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression>
 {
     [SerializeField] private ProgressiveTextReveal chatBox;
     [SerializeField] private Character playerCharacter;
@@ -17,5 +17,13 @@ public sealed class DialogueView : OnMessage<ShowStatement>
     protected override void Execute(ShowStatement msg)
     {
         chatBox.Display(msg.Statement);
+    }
+
+    protected override void Execute(ChangeExpression msg)
+    {
+        if (msg.Character == playerCharacter)
+            playerCharacterView.Init(playerCharacter, msg.Expression);
+        else
+            otherCharacterView.Init(msg.Character, msg.Expression);
     }
 }
