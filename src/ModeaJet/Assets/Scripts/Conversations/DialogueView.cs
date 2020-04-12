@@ -1,12 +1,12 @@
-﻿using Assets.Scripts.DataStructures.Commands;
-using UnityEngine;
+﻿using UnityEngine;
 
-public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression>
+public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, ShowOptions>
 {
     [SerializeField] private ProgressiveTextReveal chatBox;
     [SerializeField] private Character playerCharacter;
     [SerializeField] private CharacterView playerCharacterView;
     [SerializeField] private CharacterView otherCharacterView;
+    [SerializeField] private ConversationOptionsView optionsView;
 
     public void StartConversation(Character other)
     {
@@ -16,6 +16,7 @@ public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression>
     
     protected override void Execute(ShowStatement msg)
     {
+        optionsView.Hide();
         chatBox.Display(msg.Statement);
     }
 
@@ -25,5 +26,11 @@ public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression>
             playerCharacterView.Init(playerCharacter, msg.Expression);
         else
             otherCharacterView.Init(msg.Character, msg.Expression);
+    }
+
+    protected override void Execute(ShowOptions msg)
+    {
+        chatBox.Hide();
+        optionsView.Show(msg.Options);
     }
 }
