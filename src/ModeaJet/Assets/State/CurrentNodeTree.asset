@@ -17,4 +17,4 @@ MonoBehaviour:
   NextNodeIds: []
   IsActive: 0
   ShouldEnd: 0
-  IsDebug: 0
+  IsDebug: 1

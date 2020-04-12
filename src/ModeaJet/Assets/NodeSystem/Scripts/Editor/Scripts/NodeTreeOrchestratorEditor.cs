@@ -29,6 +29,7 @@ namespace EnigmaDragons.NodeSystem
 
         private static T Cast<T>(object o)
         {
+
             return (T)o;
         }
     }
