@@ -1,7 +1,8 @@
 {
     "name": "EnigmaDragons.Core",
     "references": [
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:b4e70ef4c0829114689146961c011e8f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -10,6 +11,5 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+    "versionDefines": []
 }

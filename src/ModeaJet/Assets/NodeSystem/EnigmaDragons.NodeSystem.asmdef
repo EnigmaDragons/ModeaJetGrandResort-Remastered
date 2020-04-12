@@ -1,7 +1,8 @@
 {
     "name": "EnigmaDragons.NodeSystem",
     "references": [
-        "GUID:1de8d46595421b3459ea05eba6ce1840"
+        "GUID:1de8d46595421b3459ea05eba6ce1840",
+        "GUID:b4e70ef4c0829114689146961c011e8f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
