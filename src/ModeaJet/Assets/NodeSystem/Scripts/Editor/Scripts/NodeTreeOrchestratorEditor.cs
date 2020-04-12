@@ -14,6 +14,7 @@ namespace EnigmaDragons.NodeSystem
             if (GUILayout.Button("Refresh"))
             {
                 var castMethod = this.GetType().GetMethod("Cast");
+                Debug.Log(castMethod);
                 var orchestrator = (NodeTreeOrchestrator)target;
                 var fields = typeof(NodeTreeOrchestrator).GetFields().ToArray();
                 fields.Where(x =>
@@ -29,7 +30,6 @@ namespace EnigmaDragons.NodeSystem
 
         private static T Cast<T>(object o)
         {
-
             return (T)o;
         }
     }
