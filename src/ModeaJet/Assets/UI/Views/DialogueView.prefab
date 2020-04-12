@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1898912950337084157}
+  - component: {fileID: 6781692415674523431}
   m_Layer: 0
   m_Name: CharacterView
   m_TagString: Untagged
@@ -37,6 +38,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6781692415674523431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412128411710332587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb948831567342e6a77107845081a965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 6205261638039215623}
+  nameLabel: {fileID: 5147304934173398134}
 --- !u!1 &3457956678892464381
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,6 +516,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatBox: {fileID: 6596403264696294085}
+  playerCharacter: {fileID: 11400000, guid: 5d2204d6c49ce8944ac52d26e3264a58, type: 2}
+  playerCharacterView: {fileID: 0}
+  otherCharacterView: {fileID: 6781692415674523431}
 --- !u!1 &5673147217092345217
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,6 +531,7 @@ GameObject:
   - component: {fileID: 131223879435447108}
   - component: {fileID: 8876700453420725615}
   - component: {fileID: 8547471257294870473}
+  - component: {fileID: 3770557799423165855}
   m_Layer: 0
   m_Name: PlayerView
   m_TagString: Untagged
@@ -595,6 +614,20 @@ MonoBehaviour:
     ConstantValue: {r: 1, g: 0, b: 1, a: 1}
     Variable: {fileID: 0}
   image: {fileID: 0}
+--- !u!114 &3770557799423165855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5673147217092345217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb948831567342e6a77107845081a965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 8876700453420725615}
+  nameLabel: {fileID: 0}
 --- !u!1 &6135311972175926036
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public sealed class InGameViewManager : OnMessage<ShowInGameView, DismissCurrentView>
+public sealed class InGameViewManager : OnMessage<ShowInGameView, DismissCurrentView, StartConversation>
 {
     [SerializeField] private GameObject hudView;
-    [SerializeField] private GameObject dialogueView;
+    [SerializeField] private DialogueView dialogueView;
     [SerializeField] private GameObject dilemmaView;
 
     private GameObject _currentView;
@@ -16,7 +16,7 @@ public sealed class InGameViewManager : OnMessage<ShowInGameView, DismissCurrent
         if (msg.View == InGameViewId.Dilemma)
             ShowView(InGameViewId.Dilemma, dilemmaView);
         else if (msg.View == InGameViewId.Dialogue)
-            ShowView(InGameViewId.Dialogue, dialogueView);
+            ShowView(InGameViewId.Dialogue, dialogueView.gameObject);
         else if (msg.View == InGameViewId.Hud)
             ShowHudView();
         else
@@ -24,6 +24,12 @@ public sealed class InGameViewManager : OnMessage<ShowInGameView, DismissCurrent
     }
 
     protected override void Execute(DismissCurrentView msg) => Dismiss();
+    protected override void Execute(StartConversation msg)
+    {
+        ShowView(InGameViewId.Dialogue, dialogueView.gameObject);
+        dialogueView.StartConversation(msg.OtherCharacter);
+    }
+
     public void Dismiss() => ShowHudView();
 
     private void ShowHudView() => ShowView(InGameViewId.Hud, hudView);
