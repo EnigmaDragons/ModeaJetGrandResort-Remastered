@@ -192,46 +192,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8356917342656363540}
     m_Modifications:
-    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_margin.z
-      value: -166.39697
-      objectReference: {fileID: 0}
-    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_fontSize
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_fontSizeBase
-      value: 32
-      objectReference: {fileID: 0}
-    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_textAlignment
-      value: 260
-      objectReference: {fileID: 0}
-    - target: {fileID: 83274556824933509, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 83274556824933509, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 640
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931861234898554227, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_Name
-      value: InGameUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 8931861234898554227, guid: 1c8b560d416264b40a14990bffa704b4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8931861234898554231, guid: 1c8b560d416264b40a14990bffa704b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -336,6 +296,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931861234898554227, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_Name
+      value: InGameUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8931861234898554227, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_margin.z
+      value: -166.39697
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4421385531182794085, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_textAlignment
+      value: 260
+      objectReference: {fileID: 0}
+    - target: {fileID: 83274556824933509, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 83274556824933509, guid: 1c8b560d416264b40a14990bffa704b4,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 8931861234898554230, guid: 1c8b560d416264b40a14990bffa704b4,
         type: 3}
@@ -443,16 +443,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8356917342656363540}
     m_Modifications:
-    - target: {fileID: 5585476022482416868, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
-        type: 3}
-      propertyPath: m_Name
-      value: DialogueView
-      objectReference: {fileID: 0}
-    - target: {fileID: 5585476022482416868, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8074866884736403204, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -557,6 +547,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5585476022482416868, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
+        type: 3}
+      propertyPath: m_Name
+      value: DialogueView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26e5ead9ce85c5649873d5b9d405b4f0, type: 3}
