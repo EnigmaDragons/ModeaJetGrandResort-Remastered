@@ -2,9 +2,9 @@
 
 namespace Assets.Scripts.DataStructures.Commands
 {
-    public class ChooseOption : INodeCommand
+    public class Option : INodeCommand
     {
-        public string Option { get; set; }
+        public string Text { get; set; }
         //Special Named Value
         public string[] NodeTreeIds { get; set; }
     }

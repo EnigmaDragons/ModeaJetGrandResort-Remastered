@@ -2,7 +2,7 @@
 using Assets.Scripts.DataStructures.Commands;
 using EnigmaDragons.NodeSystem;
 
-public class PresentOptions : INodeCommand
+public class ShowOptions : INodeCommand
 {
-    public List<ChooseOption> Options { get; set; }
+    public List<Option> Options { get; set; }
 }

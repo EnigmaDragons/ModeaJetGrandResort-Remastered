@@ -27,6 +27,7 @@ namespace EnigmaDragons.NodeSystem
         private VNSaver _vnSaver;
         private List<Type> _commands;
         private List<Type> _conditions;
+        private List<Type> _objects;
 
         [MenuItem("Window/Dialogue Editor")]
         private static void OpenWindow() => GetWindow<NodeTreeEditor>(false, "Node Tree Editor", true);
@@ -235,6 +236,9 @@ namespace EnigmaDragons.NodeSystem
             _conditions.ForEach(x =>
                 genericMenu.AddItem(new GUIContent("Conditions/" + x.Name.WithSpaceBetweenWords()), false,
                     () => _nodes = _nodes.With(CreateNode(new NodeContent(x), mousePosition))));
+            _objects.ForEach(x =>
+                genericMenu.AddItem(new GUIContent("Objects/" + x.Name.WithSpaceBetweenWords()), false,
+                    () => _nodes = _nodes.With(CreateNode(new NodeContent(x), mousePosition))));
             genericMenu.ShowAsContext();
         }
 
@@ -303,6 +307,7 @@ namespace EnigmaDragons.NodeSystem
         {
             _commands = new List<Type>();
             _conditions = new List<Type>();
+            _objects = new List<Type>();
             AppDomain.CurrentDomain
                 .GetAssemblies()
                 .SelectMany(x => x.GetTypes())
@@ -313,6 +318,8 @@ namespace EnigmaDragons.NodeSystem
                         _commands.Add(x);
                     if (typeof(INodeCondition).IsAssignableFrom(x))
                         _conditions.Add(x);
+                    if (typeof(INodeObject).IsAssignableFrom(x))
+                        _objects.Add(x);
                 });
         }
     }

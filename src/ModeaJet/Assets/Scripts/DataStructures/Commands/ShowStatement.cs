@@ -1,8 +1,5 @@
-﻿namespace Assets.Scripts.DataStructures.Commands
+﻿public class ShowStatement
 {
-    public class ShowStatement
-    {
-        public Character Character { get; set; }
-        public string Statement { get; set; }
-    }
+    public Character Character { get; set; }
+    public string Statement { get; set; }
 }

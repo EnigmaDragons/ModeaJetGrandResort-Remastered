@@ -19,7 +19,11 @@ namespace EnigmaDragons.NodeSystem
         #endregion
 
         #region Messages To Wait For Map
-        private readonly Dictionary<Type, Type[]> _messagesToWaitForMap = new DictionaryWithDefault<Type, Type[]>(new Type[0]);
+        private readonly Dictionary<Type, Type[]> _messagesToWaitForMap = new DictionaryWithDefault<Type, Type[]>(new Type[0])
+        {
+            { typeof(ShowStatement), new Type[] { typeof(CommandFinished<ShowStatement>) } },
+            { typeof(ShowOptions), new Type[] { typeof(CommandFinished<ShowOptions>) } },
+        };
         #endregion
 
         #region Main Code
@@ -47,7 +51,6 @@ namespace EnigmaDragons.NodeSystem
                 _conditionMap = Conditions.ToDictionary(x => x.CondtionType, x => x);
             Message.Subscribe<NodeTreeChanged>(Execute, this);
             Message.Subscribe<MessageProcessed>(Execute, this);
-            Message.Subscribe<ProgressNodeTree>(_ => Next(), this);
         }
 
         private void OnDisable()

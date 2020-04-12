@@ -1,4 +1,4 @@
 ﻿namespace EnigmaDragons.NodeSystem
 {
-    public class ProgressNodeTree {}
+    public interface INodeObject {}
 }

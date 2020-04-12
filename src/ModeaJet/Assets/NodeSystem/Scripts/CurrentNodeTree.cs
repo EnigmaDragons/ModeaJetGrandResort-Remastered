@@ -18,5 +18,12 @@ namespace EnigmaDragons.NodeSystem
             IsActive = true;
             Message.Publish(new NodeTreeChanged());
         }
+
+        public void StopNodeTree()
+        {
+            IsActive = false;
+            ShouldEnd = true;
+            Message.Publish(new NodeTreeChanged());
+        }
     }
 }
