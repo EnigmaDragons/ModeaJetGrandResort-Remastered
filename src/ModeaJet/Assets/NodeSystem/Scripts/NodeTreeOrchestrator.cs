@@ -30,7 +30,6 @@ namespace EnigmaDragons.NodeSystem
         private static readonly Dictionary<string, Dictionary<string, INodeCondition>> _nodeTreeConditionMap = new Dictionary<string, Dictionary<string, INodeCondition>>();
         private static Dictionary<Type, NodeConditionHandler> _conditionMap;
         private static Dictionary<int, ScriptableObject> _assetMap;
-        private readonly GuidToTypeMap _guidToTypeMap = new GuidToTypeMap();
         private readonly IMediaType _mediaType = new JsonMediaType();
 
         private NodeTreeData _nodeTree;
@@ -97,8 +96,8 @@ namespace EnigmaDragons.NodeSystem
 
         private object BuildNode(NodeData node)
         {
-            Dictionary<string, PropertyInfo> props = _guidToTypeMap[node.TypeGuid].GetProperties().Where(x => x.CanWrite).ToDictionary(x => x.Name, x => x);
-            var nodeInstance = Activator.CreateInstance(_guidToTypeMap[node.TypeGuid]);
+            Dictionary<string, PropertyInfo> props = Type.GetType(node.Type).GetProperties().Where(x => x.CanWrite).ToDictionary(x => x.Name, x => x);
+            var nodeInstance = Activator.CreateInstance(Type.GetType(node.Type));
             foreach (var prop in node.Properties)
             {
                 if (props[prop.Key].PropertyType == typeof(bool))
@@ -143,7 +142,7 @@ namespace EnigmaDragons.NodeSystem
         private void ExecuteCommand(NodeData node)
         {
             if (CurrentNodeTree.IsDebug)
-                Debug.Log($"Executing Command: {_guidToTypeMap[node.TypeGuid].Name}");
+                Debug.Log($"Executing Command: {Type.GetType(node.Type).Name}");
             CurrentNodeTree.NextNodeIds = node.NextIds.ToArray();
             _messagesToWaitFor = _messagesToWaitForMap[_nodeTreeCommandMap[node.Id].GetType()].ToList();
             if (CurrentNodeTree.IsDebug && _messagesToWaitFor.Any())
@@ -155,16 +154,16 @@ namespace EnigmaDragons.NodeSystem
 
         private void ResolveCondition(NodeData node)
         {
-            if (_conditionMap[_guidToTypeMap[node.TypeGuid]].IsConditionMet(_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id]))
+            if (_conditionMap[Type.GetType(node.Type)].IsConditionMet(_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id]))
             {
                 if (CurrentNodeTree.IsDebug)
-                    Debug.Log($"Evaluated Condition To Be True: {_guidToTypeMap[node.TypeGuid].Name}");
+                    Debug.Log($"Evaluated Condition To Be True: {Type.GetType(node.Type).Name}");
                 CurrentNodeTree.NextNodeIds = node.NextIds.Where(x => _nodeTreeCommandMap.ContainsKey(x)).ToArray();
                 Next();
             }
             else if(CurrentNodeTree.IsDebug)
             {
-                Debug.Log($"Evaluated Condition To Be True: {_guidToTypeMap[node.TypeGuid].Name}");
+                Debug.Log($"Evaluated Condition To Be True: {Type.GetType(node.Type).Name}");
             }
         }
         #endregion

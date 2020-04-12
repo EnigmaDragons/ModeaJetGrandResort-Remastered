@@ -26,9 +26,9 @@ namespace EnigmaDragons.NodeSystem.Editor
             Action<ConnectionPoint> onClickConnection, Action<Node> onRemoveNode, Action<Node> onDuplicateComplete)
             : this(content, position, Guid.NewGuid().ToString(), onClickConnection, onRemoveNode, onDuplicateComplete) { }
 
-        public Node(GuidToTypeMap map, NodeEditorData data,
+        public Node(NodeEditorData data,
             Action<ConnectionPoint> onClickConnection, Action<Node> onRemoveNode, Action<Node> onDuplicateComplete)
-            : this(new NodeContent(map, data.NodeData), new Vector2(data.X, data.Y), data.NodeData.Id, onClickConnection, onRemoveNode, onDuplicateComplete) { }
+            : this(new NodeContent(data.NodeData), new Vector2(data.X, data.Y), data.NodeData.Id, onClickConnection, onRemoveNode, onDuplicateComplete) { }
 
         private Node(NodeContent content, Vector2 position, string id,
             Action<ConnectionPoint> onClickConnection, Action<Node> onRemoveNode, Action<Node> onDuplicateComplete)

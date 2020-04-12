@@ -24,8 +24,9 @@ namespace EnigmaDragons.NodeSystem.Editor
         private ConnectionPoint _selectedInPoint;
         private ConnectionPoint _selectedOutPoint;
         private IMediaType _mediaType = new JsonMediaType();
-        private GuidToTypeMap _guidToTypeMap = new GuidToTypeMap();
         private VNSaver _vnSaver;
+        private List<Type> _commands;
+        private List<Type> _conditions;
 
         [MenuItem("Window/Dialogue Editor")]
         private static void OpenWindow() => GetWindow<NodeTreeEditor>(false, "Node Tree Editor", true);
@@ -34,6 +35,7 @@ namespace EnigmaDragons.NodeSystem.Editor
         {
             if (_init)
                 return;
+            InitCommandsAndConditions();
             _vnSaver = new VNSaver(new JsonFileStorage(() => Application.dataPath + "/Resources/NodeTrees/", ".txt"),
                 _mediaType);
             _menuBar = new NodeEditorMenuBar(this, Save, Load, New, Center, ResetZoom);
@@ -227,10 +229,10 @@ namespace EnigmaDragons.NodeSystem.Editor
         private void ProcessContextMenu(Vector2 mousePosition)
         {
             var genericMenu = new GenericMenu();
-            _guidToTypeMap.Commands.ForEach(x =>
+            _commands.ForEach(x =>
                 genericMenu.AddItem(new GUIContent("Commands/" + x.Name.WithSpaceBetweenWords()), false,
                     () => _nodes = _nodes.With(CreateNode(new NodeContent(x), mousePosition))));
-            _guidToTypeMap.Conditions.ForEach(x =>
+            _conditions.ForEach(x =>
                 genericMenu.AddItem(new GUIContent("Conditions/" + x.Name.WithSpaceBetweenWords()), false,
                     () => _nodes = _nodes.With(CreateNode(new NodeContent(x), mousePosition))));
             genericMenu.ShowAsContext();
@@ -240,7 +242,7 @@ namespace EnigmaDragons.NodeSystem.Editor
             => new Node(content, mousePosition, OnClickConnectionPoint, OnClickRemoveNode, x => _nodes = _nodes.With(x));
 
         private Node CreateNode(NodeEditorData data)
-            => new Node(_guidToTypeMap, data, OnClickConnectionPoint, OnClickRemoveNode, x => _nodes = _nodes.With(x));
+            => new Node(data, OnClickConnectionPoint, OnClickRemoveNode, x => _nodes = _nodes.With(x));
 
         private void OnClickConnectionPoint(ConnectionPoint point)
         {
@@ -295,6 +297,23 @@ namespace EnigmaDragons.NodeSystem.Editor
             _nodes.ForEach(x => x.Drag(delta));
             _gridOffset += delta;
             GUI.changed = true;
+        }
+
+        private void InitCommandsAndConditions()
+        {
+            _commands = new List<Type>();
+            _conditions = new List<Type>();
+            AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => !x.IsInterface && !x.IsAbstract)
+                .ForEach(x =>
+                {
+                    if (typeof(INodeCommand).IsAssignableFrom(x))
+                        _commands.Add(x);
+                    if (typeof(INodeCondition).IsAssignableFrom(x))
+                        _conditions.Add(x);
+                });
         }
     }
 
