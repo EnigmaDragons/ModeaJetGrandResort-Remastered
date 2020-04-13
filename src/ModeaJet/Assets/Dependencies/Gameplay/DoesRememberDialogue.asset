@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302b01779fca4cd4f93680e08f9ffa7e, type: 3}
   m_Name: DoesRememberDialogue
   m_EditorClassIdentifier: 
-  gameState: {fileID: 0}
+  gameState: {fileID: 11400000, guid: 6efba56859d2b9e49a096d92b99bafc9, type: 2}
