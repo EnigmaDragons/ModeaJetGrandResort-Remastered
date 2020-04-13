@@ -7,7 +7,7 @@ public sealed class InGameViewManager : OnMessage<ShowInGameView, DismissCurrent
     [SerializeField] private GameObject dilemmaView;
 
     private GameObject _currentView;
-    private InGameViewId _currentId;
+    private InGameViewId _currentId = InGameViewId.NotSet;
 
     private void Awake() => ShowHudView();
 

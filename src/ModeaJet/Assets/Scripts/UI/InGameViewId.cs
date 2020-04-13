@@ -6,4 +6,5 @@ public enum InGameViewId
     Settings = 2,
     SaveLoad = 3,
     Dilemma = 4,
+    NotSet = 99,
 }

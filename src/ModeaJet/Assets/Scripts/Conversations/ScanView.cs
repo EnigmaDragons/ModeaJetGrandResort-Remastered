@@ -16,6 +16,7 @@ public sealed class ScanView : MonoBehaviour
         gameObject.SetActive(true);
         nameLabel.text = c.ScanName;
         scanInfoArea.text = c.ScanInfo;
+        _isDisplaying = true;
     }
 
     public void Dismiss()
@@ -24,6 +25,7 @@ public sealed class ScanView : MonoBehaviour
             return;
         
         _onFinished();
+        gameObject.SetActive(false);
         _isDisplaying = false;
     }
 }

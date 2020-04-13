@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudView: {fileID: 2354359072692682989}
-  dialogueView: {fileID: 0}
+  dialogueView: {fileID: 2586792896823267963}
   dilemmaView: {fileID: 2310286906301147655}
 --- !u!1001 &118004176416173848
 PrefabInstance:
@@ -576,3 +576,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 7012940044163753111}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2586792896823267963 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4806701719865636588, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7012940044163753111}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 100fa9dd50304a83b6c6ea2970a7ef74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
