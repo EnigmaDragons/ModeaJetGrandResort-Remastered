@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,13 +17,14 @@ namespace EnigmaDragons.NodeSystem
             
             var orchestrator = (NodeTreeOrchestrator)target;
             var scriptableObjectArrayFields = typeof(NodeTreeOrchestrator)
-                .GetFields()
+                .GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                 .Where(x => x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
                 .ToArray();
             foreach (var f in scriptableObjectArrayFields)
             {
                 var arrItemType = f.FieldType.GetElementType();
                 var instances = ScriptableExtensions.GetAllInstances(arrItemType);
+                Debug.Log($"{arrItemType.Name}: {string.Join(", ", instances.Select(x => x.name))}");
                 var typedArray = Array.CreateInstance(arrItemType, instances.Length);
                 for (var i = 0; i < instances.Length; i++)
                     typedArray.SetValue(instances[i], i);
