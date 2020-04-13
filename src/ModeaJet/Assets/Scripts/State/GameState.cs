@@ -19,7 +19,7 @@ public sealed class GameState
 //        Event.SubscribeForever(EventSubscription.Create<ItemViewed>(x => ChangeState(() => _viewedItems.Add(x.Item)), this));
 //        Event.SubscribeForever(EventSubscription.Create<ThoughtGained>(x => ChangeState(() => _thoughts.Add(x.Thought)), this));
 //        Event.SubscribeForever(EventSubscription.Create<ThoughtLost>(x => ChangeState(() => _thoughts.Remove(x.Thought)), this));
-//        Event.SubscribeForever(EventSubscription.Create<DialogMemoryGained>(x => ChangeState(() =>
+//        Event.SubscribeForever(EventSubscription.Create<GainDialogueMemory>(x => ChangeState(() =>
 //        {
 //            _viewedItems.Add(x.Dialog);
 //            _memories.Add(x.Dialog, x.Location);

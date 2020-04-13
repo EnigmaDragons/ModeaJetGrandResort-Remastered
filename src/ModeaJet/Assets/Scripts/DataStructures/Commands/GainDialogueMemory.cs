@@ -1,9 +1,9 @@
 ﻿using System;
+using EnigmaDragons.NodeSystem;
 
 [Serializable]
-public class DialogMemoryGained
+public class GainDialogueMemory : INodeCommand
 {
     public string Dialog;
     public string Location;
 }
-

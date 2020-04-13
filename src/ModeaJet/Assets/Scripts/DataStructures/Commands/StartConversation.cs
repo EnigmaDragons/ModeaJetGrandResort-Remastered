@@ -2,5 +2,5 @@
 
 public class StartConversation : INodeCommand
 {
-    public Character OtherCharacter;
+    public Character OtherCharacter { get; set; }
 }
