@@ -49,6 +49,7 @@ MonoBehaviour:
   floats: []
   vector3s: []
   colors: []
-  CurrentNodeTree: {fileID: 0}
+  characters: []
+  CurrentNodeTree: {fileID: 11400000, guid: 650174380c7914c43a054f94458dd44c, type: 2}
   NodeTrees: []
   Conditions: []

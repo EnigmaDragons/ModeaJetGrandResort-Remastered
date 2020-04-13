@@ -143,7 +143,10 @@ namespace EnigmaDragons.NodeSystem
                 }
                 else if (typeof(ScriptableObject).IsAssignableFrom(props[prop.Key].PropertyType))
                 {
-                    var value = _assetMap[int.Parse(prop.Value)];
+                    var val = int.Parse(prop.Value);
+                    if (!_assetMap.ContainsKey(val))
+                        Debug.LogError($"AssetMap does not contain Id {val}");
+                    var value = _assetMap[val];
                     modifications.Add(x => props[prop.Key].SetValue(x, value));
                 }
             }
