@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hudView: {fileID: 2354359072692682989}
-  dialogueView: {fileID: 3229484492497916019}
+  dialogueView: {fileID: 0}
   dilemmaView: {fileID: 2310286906301147655}
 --- !u!1001 &118004176416173848
 PrefabInstance:
@@ -553,14 +553,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueView
       objectReference: {fileID: 0}
+    - target: {fileID: 5585476022482416868, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092911998460980496, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -356.1001
+      objectReference: {fileID: 0}
+    - target: {fileID: 4092911998460980496, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -117.220215
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26e5ead9ce85c5649873d5b9d405b4f0, type: 3}
---- !u!1 &3229484492497916019 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5585476022482416868, guid: 26e5ead9ce85c5649873d5b9d405b4f0,
-    type: 3}
-  m_PrefabInstance: {fileID: 7012940044163753111}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1251234844990071699 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8074866884736403204, guid: 26e5ead9ce85c5649873d5b9d405b4f0,

@@ -1,15 +1,26 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
-public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, ShowOptions>
+public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, ShowOptions, ScanCharacter>
 {
     [SerializeField] private ProgressiveTextReveal chatBox;
     [SerializeField] private Character playerCharacter;
     [SerializeField] private CharacterView playerCharacterView;
     [SerializeField] private CharacterView otherCharacterView;
     [SerializeField] private ConversationOptionsView optionsView;
+    [SerializeField] private Button scanButton;
+    [SerializeField] private ScanView scanView;
 
+    private Character _current;
+    
+    private void Awake()
+    {
+        scanButton.onClick.AddListener(() => Message.Publish(new ScanCharacter { Character = _current }));
+    }
+    
     public void StartConversation(Character other)
     {
+        _current = other;
         playerCharacterView.Init(playerCharacter, Expression.Default);
         otherCharacterView.Init(other, Expression.Default);
     }
@@ -32,5 +43,16 @@ public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, Sh
     {
         chatBox.Hide();
         optionsView.Show(msg.Options);
+    }
+
+    protected override void Execute(ScanCharacter msg)
+    {
+        playerCharacterView.gameObject.SetActive(false);
+        scanButton.gameObject.SetActive(false);
+        scanView.Show(_current, () =>
+        {
+            scanButton.gameObject.SetActive(true);
+            playerCharacterView.gameObject.SetActive(true);
+        });
     }
 }
