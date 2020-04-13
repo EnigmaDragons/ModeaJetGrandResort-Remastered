@@ -4,6 +4,6 @@ using EnigmaDragons.NodeSystem;
 [Serializable]
 public class GainDialogueMemory : INodeCommand
 {
-    public string Dialog;
-    public string Location;
+    public string Dialogue { get; set; }
+    public string Location { get; set; }
 }
