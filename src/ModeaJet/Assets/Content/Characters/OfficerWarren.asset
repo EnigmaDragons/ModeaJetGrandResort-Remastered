@@ -22,9 +22,44 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: expressions
-      Entry: 6
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[Expression, ModeaJetGrandResort.Contracts],[UnityEngine.Sprite,
+        UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Expression, ModeaJetGrandResort.Contracts]],
+        mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
       Data: 
-  name: 
-  scanInfo: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  displayName: 
+  scanInfo: 'Name: Warren Alexander
+
+
+    Condition: Normal
+
+
+    Augments: None
+
+
+    Criminal Record: Found guilty of petty theft at the age of 12
+
+
+    Occupation: OPID (Outer Planet Investigative Department), 17 years'
   dialogue: {fileID: 0}
   CurrentExpression: 0

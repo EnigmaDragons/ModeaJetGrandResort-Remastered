@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.DataStructures.Commands;
-using UnityEngine;
+﻿using UnityEngine;
 
 public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression>
 {
