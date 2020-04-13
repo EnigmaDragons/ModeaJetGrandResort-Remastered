@@ -32,9 +32,9 @@ namespace EnigmaDragons.NodeSystem
         public TextAsset[] NodeTrees;
         public NodeConditionHandler[] Conditions;
 
-        private static readonly Dictionary<string, Dictionary<string, INodeCommand>> _nodeTreeCommandMap = new Dictionary<string, Dictionary<string, INodeCommand>>();
-        private static readonly Dictionary<string, Dictionary<string, INodeCondition>> _nodeTreeConditionMap = new Dictionary<string, Dictionary<string, INodeCondition>>();
-        private static readonly Dictionary<string, Dictionary<string, INodeObject>> _nodeTreeObjectMap = new Dictionary<string, Dictionary<string, INodeObject>>();
+        private static readonly Dictionary<string, Dictionary<string, Func<INodeCommand>>> _nodeTreeCommandMap = new Dictionary<string, Dictionary<string, Func<INodeCommand>>>();
+        private static readonly Dictionary<string, Dictionary<string, Func<INodeCondition>>> _nodeTreeConditionMap = new Dictionary<string, Dictionary<string, Func<INodeCondition>>>();
+        private static readonly Dictionary<string, Dictionary<string, Func<INodeObject>>> _nodeTreeObjectMap = new Dictionary<string, Dictionary<string, Func<INodeObject>>>();
         private static Dictionary<Type, NodeConditionHandler> _conditionMap;
         private static Dictionary<int, ScriptableObject> _assetMap;
         private readonly IMediaType _mediaType = new JsonMediaType();
@@ -89,75 +89,115 @@ namespace EnigmaDragons.NodeSystem
                 || !_nodeTreeConditionMap.ContainsKey(CurrentNodeTree.NodeTree.name)
                 || !_nodeTreeObjectMap.ContainsKey(CurrentNodeTree.NodeTree.name))
             {
-                _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, INodeCommand>();
-                _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, INodeCondition>();
-                _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, INodeObject>();
+                _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, Func<INodeCommand>>();
+                _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, Func<INodeCondition>>();
+                _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, Func<INodeObject>>();
                 foreach (var node in _nodeTree.Nodes)
                 {
-                    var nodeInstance = BuildNode(node.Value);
-                    if (nodeInstance is INodeCommand command)
-                        _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = command;
-                    if (nodeInstance is INodeCondition condition)
-                        _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = condition;
-                    if (nodeInstance is INodeObject nodeObject)
-                        _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = nodeObject;
-                }
-                foreach (var node in _nodeTree.Nodes)
-                {
-                    if (_nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(node.Value.Id))
-                        PopulateNodeProperties(node.Value, _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id]);
-                    if (_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name].ContainsKey(node.Value.Id))
-                        PopulateNodeProperties(node.Value, _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id]);
-                    if (_nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(node.Value.Id))
-                        PopulateNodeProperties(node.Value, _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id]);
+                    var nodeType = Type.GetType(node.Value.Type);
+                    if (typeof(INodeCommand).IsAssignableFrom(nodeType))
+                        _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeCommand>(node.Value);
+                    if (typeof(INodeCondition).IsAssignableFrom(nodeType))
+                        _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeCondition>(node.Value);
+                    if (typeof(INodeObject).IsAssignableFrom(nodeType))
+                        _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeObject>(node.Value);
                 }
             }
         }
 
-        private object BuildNode(NodeData node)
+        private Func<T> GetBuildNodeFunc<T>(NodeData node)
         {
+            List<Action<object>> modifications = new List<Action<object>>();
             Dictionary<string, PropertyInfo> props = Type.GetType(node.Type).GetProperties().Where(x => x.CanWrite).ToDictionary(x => x.Name, x => x);
-            var nodeInstance = Activator.CreateInstance(Type.GetType(node.Type));
+            var type = Type.GetType(node.Type);
             foreach (var prop in node.Properties)
             {
                 if (props[prop.Key].Name == "NodeTreeIds")
-                    props[prop.Key].SetValue(nodeInstance, node.NextIds);
+                {
+                    modifications.Add(x => props[prop.Key].SetValue(x, node.NextIds));
+                }
                 else if (props[prop.Key].PropertyType == typeof(bool))
-                    props[prop.Key].SetValue(nodeInstance, bool.Parse(prop.Value));
+                {
+                    var value = bool.Parse(prop.Value);
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
                 else if (props[prop.Key].PropertyType == typeof(string))
-                    props[prop.Key].SetValue(nodeInstance, prop.Value);
+                {
+                    var value = prop.Value;
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
                 else if (props[prop.Key].PropertyType == typeof(int))
-                    props[prop.Key].SetValue(nodeInstance, int.Parse(prop.Value));
+                {
+                    var value = int.Parse(prop.Value);
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
                 else if (props[prop.Key].PropertyType == typeof(float))
-                    props[prop.Key].SetValue(nodeInstance, float.Parse(prop.Value));
+                {
+                    var value = float.Parse(prop.Value);
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
                 else if (props[prop.Key].PropertyType == typeof(TextAsset))
-                    props[prop.Key].SetValue(nodeInstance, NodeTrees.First(x => x.GetInstanceID() == int.Parse(prop.Value)));
+                {
+                    var value = NodeTrees.First(x => x.GetInstanceID() == int.Parse(prop.Value));
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
                 else if (typeof(ScriptableObject).IsAssignableFrom(props[prop.Key].PropertyType))
-                    props[prop.Key].SetValue(nodeInstance, _assetMap[int.Parse(prop.Value)]);
+                {
+                    var value = _assetMap[int.Parse(prop.Value)];
+                    modifications.Add(x => props[prop.Key].SetValue(x, value));
+                }
             }
-            return nodeInstance;
+            var propsToPopulate = props
+                .Where(x => typeof(INodeCommand[]).IsAssignableFrom(x.Value.PropertyType)
+                    || typeof(INodeCondition[]).IsAssignableFrom(x.Value.PropertyType)
+                    || typeof(INodeObject[]).IsAssignableFrom(x.Value.PropertyType))
+                .Select(x => x.Value)
+                .ToArray();
+            if (propsToPopulate.Any())
+                modifications.Add(x => PopulateNodeTypes(node, x, propsToPopulate));
+            return () =>
+            {
+                var instance = Activator.CreateInstance(type);
+                modifications.ForEach(x => x(instance));
+                return (T)instance;
+            };
         }
 
-        private void PopulateNodeProperties(NodeData node, object nodeInstance)
+        private void PopulateNodeTypes(NodeData node, object nodeInstance, PropertyInfo[] propsToPopulate)
         {
-            var props = nodeInstance.GetType().GetProperties().Where(x => x.CanWrite);
-            foreach (var prop in props)
+            var commands = node.NextIds
+                .Where(x => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(x))
+                .Select(x => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][x]())
+                .ToArray();
+            var conditions = node.NextIds
+                .Where(x => _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name].ContainsKey(x))
+                .ToDictionary(x => _nodeTree.Nodes[x], x => _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][x]());
+            var objects = node.NextIds
+                .Where(x => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(x))
+                .Select(x => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][x]())
+                .ToArray();
+            foreach (var prop in propsToPopulate)
             {
                 if (typeof(INodeCommand[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, node.NextIds
-                        .Where(id => _nodeTreeCommandMap.ContainsKey(id)
-                                  && prop.PropertyType.GetElementType().IsAssignableFrom(_nodeTreeCommandMap[id].GetType()))
-                        .Select(id => _nodeTreeCommandMap[id]));
-                else if (typeof(INodeCondition[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, node.NextIds
-                        .Where(id => _nodeTreeConditionMap.ContainsKey(id)
-                                  && prop.PropertyType.GetElementType().IsAssignableFrom(_nodeTreeConditionMap[id].GetType()))
-                        .Select(id => _nodeTreeConditionMap[id]));
-                else if (typeof(INodeObject[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, node.NextIds
-                        .Where(id => _nodeTreeObjectMap.ContainsKey(id)
-                                  && prop.PropertyType.GetElementType().IsAssignableFrom(_nodeTreeObjectMap[id].GetType()))
-                        .Select(id => _nodeTreeObjectMap[id]));
+                    prop.SetValue(nodeInstance, commands.Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))
+                        .Concat(conditions
+                            .Where(condition => IsConditionMet(condition.Value))
+                            .SelectMany(condition => condition.Key.NextIds
+                                .Where(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
+                                .Select(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][id]())
+                                .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
+                        .ToArray());
+                if (typeof(INodeCondition[]).IsAssignableFrom(prop.PropertyType))
+                    prop.SetValue(nodeInstance, conditions.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.Value.GetType())).ToArray());
+                if (typeof(INodeObject[]).IsAssignableFrom(prop.PropertyType))
+                    prop.SetValue(nodeInstance, objects.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.GetType()))
+                        .Concat(conditions
+                            .Where(condition => IsConditionMet(condition.Value))
+                            .SelectMany(condition => condition.Key.NextIds
+                                .Where(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
+                                .Select(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][id]())
+                                .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
+                        .ToArray());
             }
         }
 
@@ -189,21 +229,22 @@ namespace EnigmaDragons.NodeSystem
             if (CurrentNodeTree.IsDebug)
                 Debug.Log($"Executing Command: {Type.GetType(node.Type).Name}");
             CurrentNodeTree.NextNodeIds = node.NextIds.ToArray();
-            _messagesToWaitFor = _messagesToWaitForMap[_nodeTreeCommandMap[node.Id].GetType()].ToList();
+            var command = _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Id]();
+            _messagesToWaitFor = _messagesToWaitForMap[command.GetType()].ToList();
             if (CurrentNodeTree.IsDebug && _messagesToWaitFor.Any())
                 Debug.Log($"Waiting For Messages: {string.Join(", ", _messagesToWaitFor.Select(x => x.Name))}");
-            Message.Publish(_nodeTreeCommandMap[node.Id]);
+            Message.Publish(command);
             if (!_messagesToWaitFor.Any())
                 Next();
         }
 
         private void ResolveCondition(NodeData node)
         {
-            if (_conditionMap[Type.GetType(node.Type)].IsConditionMet(_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id]))
+            if (IsConditionMet(node))
             {
                 if (CurrentNodeTree.IsDebug)
                     Debug.Log($"Evaluated Condition To Be True: {Type.GetType(node.Type).Name}");
-                CurrentNodeTree.NextNodeIds = node.NextIds.Where(x => _nodeTreeCommandMap.ContainsKey(x)).ToArray();
+                CurrentNodeTree.NextNodeIds = node.NextIds.Where(x => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(x)).ToArray();
                 Next();
             }
             else if(CurrentNodeTree.IsDebug)
@@ -211,6 +252,13 @@ namespace EnigmaDragons.NodeSystem
                 Debug.Log($"Evaluated Condition To Be True: {Type.GetType(node.Type).Name}");
             }
         }
+
+        private bool IsConditionMet(NodeData node)
+            => IsConditionMet(_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id]());
+
+        private bool IsConditionMet(INodeCondition condition)
+            => _conditionMap[condition.GetType()].IsConditionMet(condition);
+
         #endregion
     }
 }
