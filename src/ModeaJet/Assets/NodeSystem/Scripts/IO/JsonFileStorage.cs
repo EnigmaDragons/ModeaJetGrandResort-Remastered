@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using UnityEngine;
+using Tiny;
 
 namespace EnigmaDragons.NodeSystem
 {
@@ -17,7 +17,7 @@ namespace EnigmaDragons.NodeSystem
         }
 
         public bool Exists(string key) => File.Exists(GetSavePath(key));
-        public T Get<T>(string key) => JsonUtility.FromJson<T>(File.ReadAllText(GetSavePath(key)));
+        public T Get<T>(string key) => File.ReadAllText(GetSavePath(key)).Decode<T>();
         public void Remove(string key) => File.Delete(GetSavePath(key));
         public void Put<T>(string key, T value)
         {
@@ -25,7 +25,7 @@ namespace EnigmaDragons.NodeSystem
                 _dataFolderPath = _getDataFolderPath();
             if (!Directory.Exists(_dataFolderPath))
                 Directory.CreateDirectory(_dataFolderPath);
-            File.WriteAllText(GetSavePath(key), JsonUtility.ToJson(value));
+            File.WriteAllText(GetSavePath(key), value.Encode());
         }
 
         private string GetSavePath(string saveName)

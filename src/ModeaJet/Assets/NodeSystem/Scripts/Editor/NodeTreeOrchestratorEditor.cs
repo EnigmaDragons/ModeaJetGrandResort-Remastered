@@ -24,11 +24,7 @@ namespace EnigmaDragons.NodeSystem
             {
                 var arrItemType = f.FieldType.GetElementType();
                 var instances = ScriptableExtensions.GetAllInstances(arrItemType);
-                Debug.Log($"{arrItemType.Name}: {string.Join(", ", instances.Select(x => x.name))}");
-                var typedArray = Array.CreateInstance(arrItemType, instances.Length);
-                for (var i = 0; i < instances.Length; i++)
-                    typedArray.SetValue(instances[i], i);
-                f.SetValue(target, typedArray);
+                ReflectionUtilities.SetArrayValueOnField(f, target, instances);
             }
                     
             orchestrator.NodeTrees = Resources.LoadAll<TextAsset>("NodeTrees");

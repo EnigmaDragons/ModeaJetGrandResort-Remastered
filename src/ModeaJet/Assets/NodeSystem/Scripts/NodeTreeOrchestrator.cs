@@ -20,7 +20,7 @@ namespace EnigmaDragons.NodeSystem
         #endregion
 
         #region Messages To Wait For Map
-        private readonly Dictionary<Type, Type[]> _messagesToWaitForMap = new DictionaryWithDefault<Type, Type[]>(new Type[0])
+        private readonly DictionaryWithDefault<Type, Type[]> _messagesToWaitForMap = new DictionaryWithDefault<Type, Type[]>(new Type[0])
         {
             { typeof(ShowStatement), new Type[] { typeof(CommandFinished<ShowStatement>) } },
             { typeof(ShowOptions), new Type[] { typeof(CommandFinished<ShowOptions>) } },
@@ -45,7 +45,7 @@ namespace EnigmaDragons.NodeSystem
         private void OnEnable()
         {
             if (_assetMap == null)
-                _assetMap = typeof(NodeTreeOrchestrator).GetFields()
+                _assetMap = typeof(NodeTreeOrchestrator).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(x => x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
                     .SelectMany(x => (ScriptableObject[])x.GetValue(this))
                     .ToDictionary(x => x.GetInstanceID(), x => x);
@@ -94,13 +94,13 @@ namespace EnigmaDragons.NodeSystem
                 _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name] = new Dictionary<string, Func<INodeObject>>();
                 foreach (var node in _nodeTree.Nodes)
                 {
-                    var nodeType = Type.GetType(node.Value.Type);
+                    var nodeType = Type.GetType(node.Type);
                     if (typeof(INodeCommand).IsAssignableFrom(nodeType))
-                        _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeCommand>(node.Value);
+                        _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][node.Id] = GetBuildNodeFunc<INodeCommand>(node);
                     if (typeof(INodeCondition).IsAssignableFrom(nodeType))
-                        _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeCondition>(node.Value);
+                        _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id] = GetBuildNodeFunc<INodeCondition>(node);
                     if (typeof(INodeObject).IsAssignableFrom(nodeType))
-                        _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][node.Value.Id] = GetBuildNodeFunc<INodeObject>(node.Value);
+                        _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][node.Id] = GetBuildNodeFunc<INodeObject>(node);
                 }
             }
         }
@@ -171,7 +171,7 @@ namespace EnigmaDragons.NodeSystem
                 .ToArray();
             var conditions = node.NextIds
                 .Where(x => _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name].ContainsKey(x))
-                .ToDictionary(x => _nodeTree.Nodes[x], x => _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][x]());
+                .ToDictionary(x => _nodeTree[x], x => _nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][x]());
             var objects = node.NextIds
                 .Where(x => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(x))
                 .Select(x => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][x]())
@@ -179,25 +179,28 @@ namespace EnigmaDragons.NodeSystem
             foreach (var prop in propsToPopulate)
             {
                 if (typeof(INodeCommand[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, commands.Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))
-                        .Concat(conditions
-                            .Where(condition => IsConditionMet(condition.Value))
-                            .SelectMany(condition => condition.Key.NextIds
-                                .Where(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
-                                .Select(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][id]())
-                                .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
-                        .ToArray());
+                    ReflectionUtilities.SetValueValueOnProperty(prop, nodeInstance, 
+                        commands.Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))
+                            .Concat(conditions
+                                .Where(condition => IsConditionMet(condition.Value))
+                                .SelectMany(condition => condition.Key.NextIds
+                                    .Where(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
+                                    .Select(id => _nodeTreeCommandMap[CurrentNodeTree.NodeTree.name][id]())
+                                    .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
+                            .ToArray());
                 if (typeof(INodeCondition[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, conditions.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.Value.GetType())).ToArray());
+                    ReflectionUtilities.SetValueValueOnProperty(prop, nodeInstance, 
+                        conditions.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.Value.GetType())).Select(x => x.Value).ToArray());
                 if (typeof(INodeObject[]).IsAssignableFrom(prop.PropertyType))
-                    prop.SetValue(nodeInstance, objects.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.GetType()))
-                        .Concat(conditions
-                            .Where(condition => IsConditionMet(condition.Value))
-                            .SelectMany(condition => condition.Key.NextIds
-                                .Where(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
-                                .Select(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][id]())
-                                .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
-                        .ToArray());
+                    ReflectionUtilities.SetValueValueOnProperty(prop, nodeInstance, 
+                        objects.Where(x => prop.PropertyType.GetElementType().IsAssignableFrom(x.GetType()))
+                            .Concat(conditions
+                                .Where(condition => IsConditionMet(condition.Value))
+                                .SelectMany(condition => condition.Key.NextIds
+                                    .Where(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name].ContainsKey(id))
+                                    .Select(id => _nodeTreeObjectMap[CurrentNodeTree.NodeTree.name][id]())
+                                    .Where(command => prop.PropertyType.GetElementType().IsAssignableFrom(command.GetType()))))
+                            .ToArray());
             }
         }
 
@@ -211,12 +214,12 @@ namespace EnigmaDragons.NodeSystem
                 {
                     if (_nodeTreeCommandMap[CurrentNodeTree.NodeTree.name].ContainsKey(CurrentNodeTree.NextNodeIds[i]))
                     {
-                        ExecuteCommand(_nodeTree.Nodes[CurrentNodeTree.NextNodeIds[i]]);
+                        ExecuteCommand(_nodeTree[CurrentNodeTree.NextNodeIds[i]]);
                         return;
                     }
                     else if (_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name].ContainsKey(CurrentNodeTree.NextNodeIds[i]))
                     {
-                        ResolveCondition(_nodeTree.Nodes[CurrentNodeTree.NextNodeIds[i]]);
+                        ResolveCondition(_nodeTree[CurrentNodeTree.NextNodeIds[i]]);
                         return;
                     }
                 }
