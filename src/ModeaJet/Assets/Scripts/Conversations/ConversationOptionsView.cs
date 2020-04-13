@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Assets.Scripts.DataStructures.Commands;
-using EnigmaDragons.NodeSystem;
+﻿using EnigmaDragons.NodeSystem;
 using UnityEngine;
 
 public sealed class ConversationOptionsView : MonoBehaviour
@@ -10,9 +8,9 @@ public sealed class ConversationOptionsView : MonoBehaviour
 
     public void Hide() => gameObject.SetActive(false);
     
-    public void Show(List<Option> msgOptions)
+    public void Show(Option[] msgOptions)
     {
-        var numOptions = msgOptions.Count;
+        var numOptions = msgOptions.Length;
         for (var i = 0; i < buttons.Length; i++)
         {
             if (i < numOptions)
