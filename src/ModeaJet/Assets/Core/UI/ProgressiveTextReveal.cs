@@ -12,7 +12,9 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
     private int _cursor;
     private string _fullText = "" ;
     private Action _onFinished = () => { };
-   
+
+    public void Hide() => gameObject.SetActive(false);
+
     public void Display(string text) => Display(text, () => { });
     public void Display(string text, Action onFinished)
     {
