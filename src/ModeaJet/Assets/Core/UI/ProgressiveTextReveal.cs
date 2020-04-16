@@ -2,10 +2,11 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public sealed class ProgressiveTextReveal : MonoBehaviour
 {
-    [SerializeField] private GameObject chatBox;
+    [SerializeField] private Button chatBox;
     [SerializeField] private TextMeshProUGUI textBox;
     [SerializeField] private FloatReference secondsPerCharacter;
     [SerializeField, ReadOnly] private bool isRevealing;
@@ -14,7 +15,9 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
     private string _fullText = "" ;
     private Action _onFinished = () => { };
 
-    public void Hide() => chatBox.SetActive(false);
+    private void Awake() => chatBox.onClick.AddListener(Proceed);
+    
+    public void Hide() => chatBox.gameObject.SetActive(false);
 
     public void Display(string text) => Display(text, () => { });
     public void Display(string text, Action onFinished)
@@ -44,12 +47,11 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
     private IEnumerator BeginReveal()
     {
         isRevealing = true;
-        chatBox.SetActive(true);
+        chatBox.gameObject.SetActive(true);
         _cursor = 1;
         while (isRevealing && _cursor < _fullText.Length)
         {
             var shownText = _fullText.Substring(0, _cursor);
-            Debug.Log(shownText);
             textBox.text = shownText;
             _cursor++;
             yield return new WaitForSeconds(secondsPerCharacter);
