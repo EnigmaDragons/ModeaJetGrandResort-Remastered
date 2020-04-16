@@ -17,7 +17,10 @@ public sealed class ConversationOptionsView : MonoBehaviour
         for (var i = 0; i < buttons.Length; i++)
         {
             if (i < numOptions)
-                buttons[i].Show(msgOptions[i].Text, () => SetSelectedOption(msgOptions[i].NodeTreeIds));
+            {
+                var msg = msgOptions[i];
+                buttons[i].Show(msg.Text, () => SetSelectedOption(msg.NodeTreeIds));
+            }
             else if (i == numOptions)
                 buttons[i].Show("Ok, Great", EndConversation);
             else
