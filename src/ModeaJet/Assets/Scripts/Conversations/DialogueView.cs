@@ -28,7 +28,7 @@ public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, Sh
     protected override void Execute(ShowStatement msg)
     {
         optionsView.Hide();
-        chatBox.Display(msg.Statement);
+        chatBox.Display(msg.Statement, () => Message.Publish(new CommandFinished<ShowStatement>()));
     }
 
     protected override void Execute(ChangeExpression msg)
