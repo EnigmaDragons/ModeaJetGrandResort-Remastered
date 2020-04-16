@@ -261,7 +261,7 @@ namespace EnigmaDragons.NodeSystem
             => IsConditionMet(_nodeTreeConditionMap[CurrentNodeTree.NodeTree.name][node.Id]());
 
         private bool IsConditionMet(INodeCondition condition)
-            => _conditionMap[condition.GetType()].IsConditionMet(condition);
+            => _conditionMap[condition.GetType()].IsConditionMet(IsConditionMet, condition);
 
         #endregion
     }

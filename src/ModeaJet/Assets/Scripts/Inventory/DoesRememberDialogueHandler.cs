@@ -6,8 +6,10 @@ using UnityEngine;
 public class DoesRememberDialogueHandler : NodeConditionHandler
 {
     [SerializeField] private CurrentGameState gameState;
+
     public override Type CondtionType => typeof(DoesRememberDialogue);
-    public override bool IsConditionMet(object condition)
+
+    public new bool IsConditionMet(object condition)
     {
         var doesRemember = (DoesRememberDialogue) condition;
         return gameState.GameState.HasViewedItem(doesRemember.Dialogue) != doesRemember.Inverse;

@@ -6,6 +6,7 @@ namespace EnigmaDragons.NodeSystem
     public abstract class NodeConditionHandler : ScriptableObject
     {
         public abstract Type CondtionType { get; }
-        public abstract bool IsConditionMet(object condition);
+        public virtual bool IsConditionMet(Func<INodeCondition, bool> isConditionMet, object condition) => IsConditionMet(condition);
+        public virtual bool IsConditionMet(object condition) => true;
     }
 }
