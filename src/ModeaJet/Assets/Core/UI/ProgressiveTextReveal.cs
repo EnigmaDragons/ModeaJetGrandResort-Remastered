@@ -5,6 +5,7 @@ using UnityEngine;
 
 public sealed class ProgressiveTextReveal : MonoBehaviour
 {
+    [SerializeField] private GameObject chatBox;
     [SerializeField] private TextMeshProUGUI textBox;
     [SerializeField] private FloatReference secondsPerCharacter;
     [SerializeField, ReadOnly] private bool isRevealing;
@@ -13,7 +14,7 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
     private string _fullText = "" ;
     private Action _onFinished = () => { };
 
-    public void Hide() => gameObject.SetActive(false);
+    public void Hide() => chatBox.SetActive(false);
 
     public void Display(string text) => Display(text, () => { });
     public void Display(string text, Action onFinished)
@@ -43,7 +44,7 @@ public sealed class ProgressiveTextReveal : MonoBehaviour
     private IEnumerator BeginReveal()
     {
         isRevealing = true;
-        gameObject.SetActive(true);
+        chatBox.SetActive(true);
         _cursor = 1;
         while (isRevealing && _cursor < _fullText.Length)
         {

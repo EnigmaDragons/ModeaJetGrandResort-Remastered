@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2686937614515830314}
   - component: {fileID: 8554333593038990650}
   - component: {fileID: 4806701719865636588}
+  - component: {fileID: 3942907803340519474}
   m_Layer: 0
   m_Name: DialogueView
   m_TagString: Untagged
@@ -116,13 +117,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100fa9dd50304a83b6c6ea2970a7ef74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatBox: {fileID: 6596403264696294085}
+  chatBox: {fileID: 3942907803340519474}
   playerCharacter: {fileID: 11400000, guid: 5d2204d6c49ce8944ac52d26e3264a58, type: 2}
   playerCharacterView: {fileID: 3770557799423165855}
   otherCharacterView: {fileID: 6781692415674523431}
   optionsView: {fileID: 5859351044173860634}
   scanButton: {fileID: 4003906169639915916}
   scanView: {fileID: 6701713231723412624}
+--- !u!114 &3942907803340519474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5585476022482416868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696966cf935b474e9c9a75105d695ca1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chatBox: {fileID: 3457956678892464381}
+  textBox: {fileID: 5694071151210712379}
+  secondsPerCharacter:
+    UseConstant: 1
+    ConstantValue: 0.03
+    FloatVariable: {fileID: 0}
+  isRevealing: 0
 --- !u!1 &7999530073395698413
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,22 +448,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fb6f9be0d68aee4dadbc30e089d690e, type: 3}
+--- !u!1 &3457956678892464381 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9215612975255909614, guid: 2fb6f9be0d68aee4dadbc30e089d690e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5771730623073410067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6003612782162339906 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 236527420898751569, guid: 2fb6f9be0d68aee4dadbc30e089d690e,
     type: 3}
   m_PrefabInstance: {fileID: 5771730623073410067}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6596403264696294085 stripped
+--- !u!114 &5694071151210712379 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 833851726157825750, guid: 2fb6f9be0d68aee4dadbc30e089d690e,
+  m_CorrespondingSourceObject: {fileID: 2241712760100360488, guid: 2fb6f9be0d68aee4dadbc30e089d690e,
     type: 3}
   m_PrefabInstance: {fileID: 5771730623073410067}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696966cf935b474e9c9a75105d695ca1, type: 3}
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &6674558253829435273
@@ -453,11 +479,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8074866884736403204}
     m_Modifications:
-    - target: {fileID: 4003911262729892750, guid: d20436fb4fadbc546b7c4736eb0455dc,
-        type: 3}
-      propertyPath: m_Name
-      value: ConversationOptionsView
-      objectReference: {fileID: 0}
     - target: {fileID: 7236223131643593369, guid: d20436fb4fadbc546b7c4736eb0455dc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,6 +584,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4003911262729892750, guid: d20436fb4fadbc546b7c4736eb0455dc,
+        type: 3}
+      propertyPath: m_Name
+      value: ConversationOptionsView
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d20436fb4fadbc546b7c4736eb0455dc, type: 3}
 --- !u!224 &4092911998460980496 stripped
@@ -590,11 +616,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8074866884736403204}
     m_Modifications:
-    - target: {fileID: 3306831729717267288, guid: c2f3dcd55ac93e3479e779acf0f46104,
-        type: 3}
-      propertyPath: m_Name
-      value: ScanView
-      objectReference: {fileID: 0}
     - target: {fileID: 2888788192933300544, guid: c2f3dcd55ac93e3479e779acf0f46104,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -699,6 +720,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3306831729717267288, guid: c2f3dcd55ac93e3479e779acf0f46104,
+        type: 3}
+      propertyPath: m_Name
+      value: ScanView
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2f3dcd55ac93e3479e779acf0f46104, type: 3}

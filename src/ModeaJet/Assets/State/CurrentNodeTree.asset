@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NodeTree: {fileID: 4900000, guid: 73f98297fcf388d4fa7f5c9b3dbce53d, type: 3}
   CurrentNodeId: 
-  NextNodeIds: []
+  NextNodeIds:
+  - a7e6ed60-272c-4052-8e35-bb3f27258652
   IsActive: 1
   ShouldEnd: 0
   IsDebug: 1

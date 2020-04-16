@@ -243,7 +243,6 @@ GameObject:
   m_Component:
   - component: {fileID: 236527420898751569}
   - component: {fileID: 8450822838996395061}
-  - component: {fileID: 833851726157825750}
   - component: {fileID: 1390454931409568413}
   m_Layer: 0
   m_Name: ChatBox
@@ -281,24 +280,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9215612975255909614}
   m_CullTransparentMesh: 0
---- !u!114 &833851726157825750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9215612975255909614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 696966cf935b474e9c9a75105d695ca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textBox: {fileID: 2241712760100360488}
-  secondsPerCharacter:
-    UseConstant: 1
-    ConstantValue: 0.03
-    FloatVariable: {fileID: 0}
-  isRevealing: 0
 --- !u!114 &1390454931409568413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +323,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 833851726157825750}
+      - m_Target: {fileID: 0}
         m_MethodName: Proceed
         m_Mode: 1
         m_Arguments:
