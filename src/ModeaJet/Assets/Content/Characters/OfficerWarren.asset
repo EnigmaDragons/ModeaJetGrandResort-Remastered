@@ -75,5 +75,5 @@ MonoBehaviour:
 
 
     Occupation: OPID (Outer Planet Investigative Department), 17 years'
-  dialogue: {fileID: 0}
+  dialogue: {fileID: 4900000, guid: 73f98297fcf388d4fa7f5c9b3dbce53d, type: 3}
   CurrentExpression: 0

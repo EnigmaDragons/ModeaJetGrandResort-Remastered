@@ -65,6 +65,7 @@ GameObject:
   - component: {fileID: 3975580133784930114}
   - component: {fileID: 8649281104738345349}
   - component: {fileID: 7100025672040050019}
+  - component: {fileID: 4699015955081343552}
   m_Layer: 5
   m_Name: OfficerWarren
   m_TagString: Untagged
@@ -204,6 +205,21 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 1.02
     FloatVariable: {fileID: 0}
+--- !u!114 &4699015955081343552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358398318798311257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7adbc368030a1745b0aef3bb8efee0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeTree: {fileID: 4900000, guid: 73f98297fcf388d4fa7f5c9b3dbce53d, type: 3}
+  currentNodeTree: {fileID: 11400000, guid: 650174380c7914c43a054f94458dd44c, type: 2}
+  button: {fileID: 3975580133784930114}
 --- !u!1 &7701305697506985526
 GameObject:
   m_ObjectHideFlags: 0

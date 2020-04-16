@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9fad412cf49f464daa1dae6e3be1928, type: 3}
   m_Name: CurrentNodeTree
   m_EditorClassIdentifier: 
-  NodeTree: {fileID: 4900000, guid: 73f98297fcf388d4fa7f5c9b3dbce53d, type: 3}
+  NodeTree: {fileID: 4900000, guid: a124b5b91f639744db370a53a9cecc68, type: 3}
   CurrentNodeId: 
   NextNodeIds:
-  - a7e6ed60-272c-4052-8e35-bb3f27258652
+  - 54f61705-e04f-4dcb-aa3b-bf780ae56cd4
   IsActive: 1
   ShouldEnd: 0
   IsDebug: 1
