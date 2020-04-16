@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 
 namespace EnigmaDragons.NodeSystem
 {
+    [CreateAssetMenu(menuName = "Condition Handlers/Or")]
     public class OrConditionHandler : NodeConditionHandler
     {
         public override Type CondtionType => typeof(OrCondition);
