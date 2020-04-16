@@ -2530,9 +2530,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttons:
   - {fileID: 9046782745148295175}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2170342760581009825}
+  - {fileID: 8049201066291973417}
+  - {fileID: 3349815319852856774}
   currentNodeTree: {fileID: 11400000, guid: 650174380c7914c43a054f94458dd44c, type: 2}
 --- !u!1 &7999530073395698413
 GameObject:
