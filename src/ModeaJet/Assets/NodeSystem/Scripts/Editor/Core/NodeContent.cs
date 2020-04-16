@@ -25,6 +25,8 @@ namespace EnigmaDragons.NodeSystem
             Name = type.Name.WithSpaceBetweenWords();
             type.GetProperties().Where(x => x.CanWrite).ToArray().ForEach(prop =>
             {
+                if (prop.Name == "NodeTreeIds")
+                    _properties[prop.Name] = "[]";
                 if (prop.PropertyType == typeof(bool))
                     AddBoolElement(prop, properties);
                 else if (prop.PropertyType == typeof(string))

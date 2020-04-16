@@ -113,7 +113,7 @@ namespace EnigmaDragons.NodeSystem
             {
                 if (props[prop.Key].Name == "NodeTreeIds")
                 {
-                    modifications.Add(x => props[prop.Key].SetValue(x, node.NextIds));
+                    modifications.Add(x => props[prop.Key].SetValue(x, node.NextIds.ToArray()));
                 }
                 else if (props[prop.Key].PropertyType == typeof(bool))
                 {
