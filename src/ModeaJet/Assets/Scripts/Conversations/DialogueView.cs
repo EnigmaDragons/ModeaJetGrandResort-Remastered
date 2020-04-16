@@ -42,7 +42,7 @@ public sealed class DialogueView : OnMessage<ShowStatement, ChangeExpression, Sh
     protected override void Execute(ShowOptions msg)
     {
         chatBox.Hide();
-        optionsView.Show(msg.Options);
+        optionsView.Show(_current, msg.Options);
     }
 
     protected override void Execute(ScanCharacter msg)

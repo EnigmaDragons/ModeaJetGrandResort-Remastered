@@ -6,10 +6,13 @@ public sealed class ConversationOptionsView : MonoBehaviour
     [SerializeField] private ConversationOptionButton[] buttons;
     [SerializeField] private CurrentNodeTree currentNodeTree;
 
+    private Character _otherCharacter;
+    
     public void Hide() => gameObject.SetActive(false);
     
-    public void Show(Option[] msgOptions)
+    public void Show(Character otherCharacter, Option[] msgOptions)
     {
+        _otherCharacter = otherCharacter;
         var numOptions = msgOptions.Length;
         for (var i = 0; i < buttons.Length; i++)
         {
@@ -31,6 +34,7 @@ public sealed class ConversationOptionsView : MonoBehaviour
     private void EndConversation()
     {
         currentNodeTree.StopNodeTree();
+        Message.Publish(new ConversationFinished { OtherCharacter = _otherCharacter });
         Message.Publish(new DismissCurrentView());
     }
     
