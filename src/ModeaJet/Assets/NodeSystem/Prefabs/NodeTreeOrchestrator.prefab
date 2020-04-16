@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 964596786922023820}
   - component: {fileID: 3114601792736761565}
+  - component: {fileID: 6159524948091308570}
   m_Layer: 0
   m_Name: NodeTreeOrchestrator
   m_TagString: Untagged
@@ -44,12 +45,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bools: []
-  strings: []
+  strings:
+  - {fileID: 11400000, guid: f2efdabb2d72449478d590af2c24fe29, type: 2}
   ints: []
-  floats: []
+  floats:
+  - {fileID: 11400000, guid: f74bf7ab3b0f4ac4f9bdb09aa74c685c, type: 2}
+  - {fileID: 11400000, guid: 9ac918dfd50115d40affcd6790d23bf9, type: 2}
+  - {fileID: 11400000, guid: 1414f3852a506dc4393584d753739f6c, type: 2}
   vector3s: []
   colors: []
-  characters: []
+  characters:
+  - {fileID: 11400000, guid: 5d2204d6c49ce8944ac52d26e3264a58, type: 2}
+  - {fileID: 11400000, guid: 432e59a218913434f834c0cdd8dc0303, type: 2}
   CurrentNodeTree: {fileID: 11400000, guid: 650174380c7914c43a054f94458dd44c, type: 2}
-  NodeTrees: []
-  Conditions: []
+  NodeTrees:
+  - {fileID: 4900000, guid: ecd76c58a8319004c870e2ae912afadf, type: 3}
+  - {fileID: 4900000, guid: 73f98297fcf388d4fa7f5c9b3dbce53d, type: 3}
+  - {fileID: 4900000, guid: a124b5b91f639744db370a53a9cecc68, type: 3}
+  Conditions:
+  - {fileID: 11400000, guid: 6fdeb4afa387e794c932c2e098440f3e, type: 2}
+  - {fileID: 11400000, guid: e655ec6a10c84f4449de41e35cd6f0e7, type: 2}
+--- !u!114 &6159524948091308570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5274897913294284488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5350dcda3505a4fa04e5175b971107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentNodeTree: {fileID: 11400000, guid: 650174380c7914c43a054f94458dd44c, type: 2}
