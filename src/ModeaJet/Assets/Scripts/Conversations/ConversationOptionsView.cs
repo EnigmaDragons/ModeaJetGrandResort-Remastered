@@ -23,17 +23,20 @@ public sealed class ConversationOptionsView : MonoBehaviour
             else
                 buttons[i].gameObject.SetActive(false);
         }
+        gameObject.SetActive(true);
     }
 
     private void SetSelectedOption(string[] nextNodeTreeIDs)
     {
         currentNodeTree.NextNodeIds = nextNodeTreeIDs;
+        gameObject.SetActive(false);
         Message.Publish(new CommandFinished<ShowOptions>());
     }
 
     private void EndConversation()
     {
         currentNodeTree.StopNodeTree();
+        gameObject.SetActive(false);
         Message.Publish(new ConversationFinished { OtherCharacter = _otherCharacter });
         Message.Publish(new DismissCurrentView());
     }
