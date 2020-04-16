@@ -93,23 +93,23 @@ namespace EnigmaDragons.NodeSystem
         private void AddScriptableElement(PropertyInfo prop, Dictionary<string, string> properties)
         {
             var items = ScriptableExtensions.GetAllInstances(prop.PropertyType);
-            _properties[prop.Name] = properties.ContainsKey(prop.Name) && items.Any(x => x.GetInstanceID().ToString() == properties[prop.Name])
-                ? items.First(x => x.GetInstanceID().ToString() == properties[prop.Name]).GetInstanceID().ToString()
-                : items.First().GetInstanceID().ToString();
+            _properties[prop.Name] = properties.ContainsKey(prop.Name) && items.Any(x => x.name == properties[prop.Name])
+                ? items.First(x => x.name == properties[prop.Name]).name
+                : items.First().name;
             var dictionary = new Dictionary<string, Action>();
-            items.ForEach(item => dictionary[item.name] = () => _properties[prop.Name] = item.GetInstanceID().ToString());
-            _elements.Add(new ElementLabel(new OptionsElement(dictionary, EditorUtility.InstanceIDToObject(int.Parse(_properties[prop.Name])).name, 200), prop.Name.WithSpaceBetweenWords()));
+            items.ForEach(item => dictionary[item.name] = () => _properties[prop.Name] = item.name);
+            _elements.Add(new ElementLabel(new OptionsElement(dictionary, _properties[prop.Name], 200), prop.Name.WithSpaceBetweenWords()));
         }
 
         private void AddTextAssetElement(PropertyInfo prop, Dictionary<string, string> properties)
         {
             var items = Resources.LoadAll<TextAsset>("NodeTrees");
-            _properties[prop.Name] = properties.ContainsKey(prop.Name) && items.Any(x => x.GetInstanceID().ToString() == properties[prop.Name])
-                ? items.First(x => x.GetInstanceID().ToString() == properties[prop.Name]).GetInstanceID().ToString()
-                : items.First().GetInstanceID().ToString();
+            _properties[prop.Name] = properties.ContainsKey(prop.Name) && items.Any(x => x.name == properties[prop.Name])
+                ? items.First(x => x.name == properties[prop.Name]).name
+                : items.First().name;
             var dictionary = new Dictionary<string, Action>();
-            items.ForEach(item => dictionary[item.name] = () => _properties[prop.Name] = item.GetInstanceID().ToString());
-            _elements.Add(new ElementLabel(new OptionsElement(dictionary, EditorUtility.InstanceIDToObject(int.Parse(_properties[prop.Name])).name, 200), prop.Name.WithSpaceBetweenWords()));
+            items.ForEach(item => dictionary[item.name] = () => _properties[prop.Name] = item.name);
+            _elements.Add(new ElementLabel(new OptionsElement(dictionary, _properties[prop.Name], 200), prop.Name.WithSpaceBetweenWords()));
         }
 
         private void AddEnumElement(PropertyInfo prop, Dictionary<string, string> properties)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEditor.Graphs;
 using UnityEngine;
 
 namespace EnigmaDragons.NodeSystem
@@ -36,7 +35,7 @@ namespace EnigmaDragons.NodeSystem
         private static readonly Dictionary<string, Dictionary<string, Func<INodeCondition>>> _nodeTreeConditionMap = new Dictionary<string, Dictionary<string, Func<INodeCondition>>>();
         private static readonly Dictionary<string, Dictionary<string, Func<INodeObject>>> _nodeTreeObjectMap = new Dictionary<string, Dictionary<string, Func<INodeObject>>>();
         private static Dictionary<Type, NodeConditionHandler> _conditionMap;
-        private static Dictionary<int, ScriptableObject> _assetMap;
+        private static Dictionary<string, ScriptableObject> _assetMap;
         private readonly IMediaType _mediaType = new JsonMediaType();
 
         private NodeTreeData _nodeTree;
@@ -48,7 +47,7 @@ namespace EnigmaDragons.NodeSystem
                 _assetMap = typeof(NodeTreeOrchestrator).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(x => x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
                     .SelectMany(x => (ScriptableObject[])x.GetValue(this))
-                    .ToDictionary(x => x.GetInstanceID(), x => x);
+                    .ToDictionary(x => x.name, x => x);
             if (_conditionMap == null)
                 _conditionMap = Conditions.ToDictionary(x => x.CondtionType, x => x);
             Message.Subscribe<NodeTreeChanged>(Execute, this);
@@ -138,15 +137,14 @@ namespace EnigmaDragons.NodeSystem
                 }
                 else if (props[prop.Key].PropertyType == typeof(TextAsset))
                 {
-                    var value = NodeTrees.First(x => x.GetInstanceID() == int.Parse(prop.Value));
+                    var value = NodeTrees.First(x => x.name == prop.Value);
                     modifications.Add(x => props[prop.Key].SetValue(x, value));
                 }
                 else if (typeof(ScriptableObject).IsAssignableFrom(props[prop.Key].PropertyType))
                 {
-                    var val = int.Parse(prop.Value);
-                    if (!_assetMap.ContainsKey(val))
-                        Debug.LogError($"AssetMap does not contain Id {val}");
-                    var value = _assetMap[val];
+                    if (!_assetMap.ContainsKey(prop.Value))
+                        Debug.LogError($"AssetMap does not contain {prop.Value}");
+                    var value = _assetMap[prop.Value];
                     modifications.Add(x => props[prop.Key].SetValue(x, value));
                 }
             }
