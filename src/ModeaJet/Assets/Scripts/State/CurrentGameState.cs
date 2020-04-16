@@ -6,8 +6,6 @@ public sealed class CurrentGameState : ScriptableObject
 {
     [SerializeField] private GameState gameState;
 
-    public GameState GameState => gameState;
-
     public void Init() => gameState = new GameState();
     public void Init(GameState initialState) => gameState = initialState;
     public void Subscribe(Action<GameStateChanged> onChange, object owner) => Message.Subscribe(onChange, owner);
@@ -27,4 +25,8 @@ public sealed class CurrentGameState : ScriptableObject
         gameState = apply(gameState);
         Message.Publish(new GameStateChanged(gameState));
     }
+
+    public bool HasViewedItem(string item) => gameState.ViewedItems.Contains(item);
+    public bool IsThinking(string thought) => gameState.Thoughts.Contains(thought);
+    public LocationName RememberLocation(string dialog) => gameState.Memories[dialog];
 }

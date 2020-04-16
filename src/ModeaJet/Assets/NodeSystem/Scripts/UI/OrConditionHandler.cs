@@ -7,7 +7,7 @@ namespace EnigmaDragons.NodeSystem
     {
         public override Type CondtionType => typeof(OrCondition);
 
-        public new bool IsConditionMet(Func<INodeCondition, bool> isConditionMet, object condition) 
+        public override bool IsConditionMet(Func<INodeCondition, bool> isConditionMet, object condition) 
             => ((OrCondition) condition).Conditions.Any(isConditionMet);
     }
 }

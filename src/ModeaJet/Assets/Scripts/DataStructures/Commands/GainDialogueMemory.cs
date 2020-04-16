@@ -5,5 +5,5 @@ using EnigmaDragons.NodeSystem;
 public class GainDialogueMemory : INodeCommand
 {
     public string Dialogue { get; set; }
-    public string Location { get; set; }
+    public LocationName Location { get; set; }
 }

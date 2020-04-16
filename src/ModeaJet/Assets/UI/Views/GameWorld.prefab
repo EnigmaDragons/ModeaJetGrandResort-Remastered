@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2241403464834277145}
   - component: {fileID: 2241403464834277126}
+  - component: {fileID: 3724862607544215360}
+  - component: {fileID: 3871048061460932832}
+  - component: {fileID: 8802735697594516888}
   m_Layer: 0
   m_Name: GameWorld
   m_TagString: Untagged
@@ -54,6 +57,45 @@ MonoBehaviour:
     UseConstant: 1
     ConstantValue: 1
     FloatVariable: {fileID: 0}
+--- !u!114 &3724862607544215360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241403464834277144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61da4331dca30b5458c44d1cf13f6255, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 6efba56859d2b9e49a096d92b99bafc9, type: 2}
+--- !u!114 &3871048061460932832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241403464834277144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94c42f1ad3eaa4f428acc8b9209336a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 6efba56859d2b9e49a096d92b99bafc9, type: 2}
+--- !u!114 &8802735697594516888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2241403464834277144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf23d1ea64c793478a02ca415dffe69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: {fileID: 11400000, guid: 6efba56859d2b9e49a096d92b99bafc9, type: 2}
 --- !u!1001 &1658111207760013205
 PrefabInstance:
   m_ObjectHideFlags: 0

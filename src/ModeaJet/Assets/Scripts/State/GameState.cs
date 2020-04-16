@@ -5,10 +5,9 @@ using UnityEngine;
 [Serializable]
 public sealed class GameState
 {
-    private readonly Dictionary<string, string> _memories = new Dictionary<string, string>();
-
-    private readonly HashSet<string> _viewedItems = new HashSet<string>();
-    private readonly HashSet<string> _thoughts = new HashSet<string>();
+    public readonly Dictionary<string, LocationName> Memories = new Dictionary<string, LocationName>();
+    public readonly HashSet<string> ViewedItems = new HashSet<string>();
+    public readonly HashSet<string> Thoughts = new HashSet<string>();
     public string PlayerName { get; set; } = GameResources.DefaultPlayerCharacterName;
     public string CurrentLocation { get; set; } = GameResources.MainMenuSceneName;
     public string CurrentLocationImage { get; set; } = "";
@@ -25,19 +24,4 @@ public sealed class GameState
 //            _memories.Add(x.Dialog, x.Location);
 //        }), this));
 //    }
-
-    public bool HasViewedItem(string item)
-    {
-        return _viewedItems.Contains(item);
-    }
-
-    public bool IsThinking(string thought)
-    {
-        return _thoughts.Contains(thought);
-    }
-
-    public string RememberLocation(string dialog)
-    {
-        return _memories[dialog];
-    }
 }

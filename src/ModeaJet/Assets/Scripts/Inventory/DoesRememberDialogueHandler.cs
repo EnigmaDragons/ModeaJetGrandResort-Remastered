@@ -9,9 +9,9 @@ public class DoesRememberDialogueHandler : NodeConditionHandler
 
     public override Type CondtionType => typeof(DoesRememberDialogue);
 
-    public new bool IsConditionMet(object condition)
+    public override bool IsConditionMet(object condition)
     {
         var doesRemember = (DoesRememberDialogue) condition;
-        return gameState.GameState.HasViewedItem(doesRemember.Dialogue) != doesRemember.Inverse;
+        return gameState.HasViewedItem(doesRemember.Dialogue) != doesRemember.Inverse;
     }
 }
