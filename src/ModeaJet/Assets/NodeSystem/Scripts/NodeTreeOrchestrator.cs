@@ -35,16 +35,16 @@ namespace EnigmaDragons.NodeSystem
         private static readonly Dictionary<string, Dictionary<string, Func<INodeCondition>>> _nodeTreeConditionMap = new Dictionary<string, Dictionary<string, Func<INodeCondition>>>();
         private static readonly Dictionary<string, Dictionary<string, Func<INodeObject>>> _nodeTreeObjectMap = new Dictionary<string, Dictionary<string, Func<INodeObject>>>();
         private static Dictionary<Type, NodeConditionHandler> _conditionMap;
-        private static Dictionary<string, ScriptableObject> _assetMap;
+        public static Dictionary<string, ScriptableObject> AssetMap;
         private readonly IMediaType _mediaType = new JsonMediaType();
 
         private NodeTreeData _nodeTree;
         private List<Type> _messagesToWaitFor = new List<Type>();
 
-        private void OnEnable()
+        public void OnEnable()
         {
-            if (_assetMap == null)
-                _assetMap = typeof(NodeTreeOrchestrator).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
+            if (AssetMap == null)
+                AssetMap = typeof(NodeTreeOrchestrator).GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)
                     .Where(x => x.FieldType.IsArray && typeof(ScriptableObject).IsAssignableFrom(x.FieldType.GetElementType()))
                     .SelectMany(x => (ScriptableObject[])x.GetValue(this))
                     .ToDictionary(x => x.name, x => x);
@@ -142,9 +142,9 @@ namespace EnigmaDragons.NodeSystem
                 }
                 else if (typeof(ScriptableObject).IsAssignableFrom(props[prop.Key].PropertyType))
                 {
-                    if (!_assetMap.ContainsKey(prop.Value))
+                    if (!AssetMap.ContainsKey(prop.Value))
                         Debug.LogError($"AssetMap does not contain {prop.Value}");
-                    var value = _assetMap[prop.Value];
+                    var value = AssetMap[prop.Value];
                     modifications.Add(x => props[prop.Key].SetValue(x, value));
                 }
             }
